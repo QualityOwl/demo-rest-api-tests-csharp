@@ -1,0 +1,51 @@
+name: Run API Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:  # Allows manual trigger from GitHub UI
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET 10
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.x'
+
+    - name: Restore NuGet
+      run: dotnet restore Restful.Booker.Api.Tests/Restful.Booker.Api.Tests.csproj
+
+    - name: Build
+      run: dotnet build Restful.Booker.Api.Tests/Restful.Booker.Api.Tests.csproj --configuration Release --no-restore -p:WarningLevel=0
+
+    - name: Run tests
+      run: dotnet test Restful.Booker.Api.Tests/Restful.Booker.Api.Tests.csproj --configuration Release --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" -p:WarningLevel=0
+      env:
+        # Map GitHub Secrets to environment variables
+        # Use double underscores (__) to represent nested config sections
+        ApiSettings__Username: ${{ secrets.AUTH_USERNAME }}
+        ApiSettings__Password: ${{ secrets.AUTH_PASSWORD }}
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()  # Upload even if tests fail
+      with:
+        name: test-results
+        path: '**/test-results.trx'
+
+    - name: Publish test results
+      uses: dorny/test-reporter@v1
+      if: always()
+      with:
+        name: Test Results
+        path: '**/test-results.trx'
+        reporter: dotnet-trx
