@@ -30,8 +30,8 @@ jobs:
     - name: Run tests
       run: dotnet test Restful.Booker.Api/Restful.Booker.Api.slnx --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" -p:WarningLevel=0
       env:
-        ApiSettings__Username: ${{ secrets.AUTH_USERNAME }}
-        ApiSettings__Password: ${{ secrets.AUTH_PASSWORD }}
+        ApiSettings__Authentication__Username: ${{ secrets.AUTH_USERNAME }}
+        ApiSettings__Authentication__Password: ${{ secrets.AUTH_PASSWORD }}
 
     - name: Upload test results
       uses: actions/upload-artifact@v4
