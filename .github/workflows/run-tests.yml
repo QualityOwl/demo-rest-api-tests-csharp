@@ -22,13 +22,13 @@ jobs:
         dotnet-version: '10.x'
 
     - name: Restore NuGet
-      run: dotnet restore Restful.Booker.Api.Tests/Restful.Booker.Api.Tests.csproj
+      run: dotnet restore
 
     - name: Build
-      run: dotnet build Restful.Booker.Api.Tests/Restful.Booker.Api.Tests.csproj --configuration Release --no-restore -p:WarningLevel=0
+      run: dotnet build --no-restore -p:WarningLevel=0
 
     - name: Run tests
-      run: dotnet test Restful.Booker.Api.Tests/Restful.Booker.Api.Tests.csproj --configuration Release --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" -p:WarningLevel=0
+      run: dotnet test --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" -p:WarningLevel=0
       env:
         # Map GitHub Secrets to environment variables
         # Use double underscores (__) to represent nested config sections
