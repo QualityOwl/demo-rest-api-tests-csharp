@@ -5,7 +5,7 @@ using Restful.Booker.Api.Tests.Models;
 using System.Net;
 using System.Text;
 
-namespace Restful.Booker.Api.Tests.Tests;
+namespace Restful.Booker.Api.Tests;
 
 public class BookingController_Tests : IClassFixture<TestFixture>
 {
