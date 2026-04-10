@@ -54,6 +54,8 @@ public class BookingController_Tests : IClassFixture<TestFixture>
         var createBody = await createResponse.Content.ReadAsStringAsync();
         var created = JsonConvert.DeserializeObject<CreateBookingResponseDto>(createBody);
 
+        createResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        created.Should().NotBeNull();
         // Act
         var response = await _fixture.HttpClient.GetAsync($"/booking/{created!.BookingId}");
         var responseBody = await response.Content.ReadAsStringAsync();
@@ -142,6 +144,9 @@ public class BookingController_Tests : IClassFixture<TestFixture>
         var createBody = await createResponse.Content.ReadAsStringAsync();
         var created = JsonConvert.DeserializeObject<CreateBookingResponseDto>(createBody);
 
+        createResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        created.Should().NotBeNull();
+
         // Get auth token
         var token = await _fixture.GetAuthTokenAsync();
 
@@ -183,7 +188,7 @@ public class BookingController_Tests : IClassFixture<TestFixture>
     }
 
     [Fact]
-    public async Task POST_booking_WithValidId_ShouldDeleteCorrectBooking()
+    public async Task DELETE_booking_WithValidId_ShouldDeleteCorrectBooking()
     {
         // Arrange - Create a booking first
         var booking = new BookingDto
@@ -208,10 +213,13 @@ public class BookingController_Tests : IClassFixture<TestFixture>
         var createBody = await createResponse.Content.ReadAsStringAsync();
         var created = JsonConvert.DeserializeObject<CreateBookingResponseDto>(createBody);
 
+        createResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        created.Should().NotBeNull();
+
         // Get auth token
         var token = await _fixture.GetAuthTokenAsync();
 
-        var request = new HttpRequestMessage(HttpMethod.Delete, $"/booking/{created!.BookingId}");
+        var request = new HttpRequestMessage(HttpMethod.Delete, $"/booking/{created.BookingId}");
         request.Headers.Add("Cookie", $"token={token}");
 
         // Act
