@@ -185,7 +185,7 @@ public class BookingController_Tests : IClassFixture<TestFixture>
     }
 
     [Fact]
-    public async Task POST_booking_WithValidId_ShouldDeleteCorrectBooking()
+    public async Task DELETE_booking_WithValidId_ShouldDeleteCorrectBooking()
     {
         // Arrange - Create a booking first
         var booking = new BookingDto
