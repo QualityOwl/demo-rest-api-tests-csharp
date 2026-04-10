@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Configuration;
-using Restful.Booker.Api.Tests.test_data;
+using Restful.Booker.Api.Tests.Data;
 
 namespace Restful.Booker.Api.Tests.Configuration;
 
