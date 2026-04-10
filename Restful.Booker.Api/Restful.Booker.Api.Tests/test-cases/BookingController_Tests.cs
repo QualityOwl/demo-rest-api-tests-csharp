@@ -144,6 +144,9 @@ public class BookingController_Tests : IClassFixture<TestFixture>
         var createBody = await createResponse.Content.ReadAsStringAsync();
         var created = JsonConvert.DeserializeObject<CreateBookingResponseDto>(createBody);
 
+        createResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        created.Should().NotBeNull();
+
         // Get auth token
         var token = await _fixture.GetAuthTokenAsync();
 
