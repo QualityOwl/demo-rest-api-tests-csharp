@@ -1,6 +1,6 @@
+using Newtonsoft.Json;
 using Restful.Booker.Api.Tests.Configuration;
 using Restful.Booker.Api.Tests.Models;
-using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Text;
 
