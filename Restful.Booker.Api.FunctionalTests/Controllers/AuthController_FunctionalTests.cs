@@ -6,11 +6,11 @@ using System.Text;
 
 namespace Restful.Booker.Api.Tests;
 
-public class AuthController_Tests : IClassFixture<TestFixture>
+public class AuthController_FunctionalTests : IClassFixture<TestFixture>
 {
     private readonly TestFixture _fixture;
 
-    public AuthController_Tests(TestFixture fixture)
+    public AuthController_FunctionalTests(TestFixture fixture)
     {
         _fixture = fixture;
     }
