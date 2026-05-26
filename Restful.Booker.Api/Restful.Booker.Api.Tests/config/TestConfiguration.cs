@@ -1,5 +1,4 @@
 using Microsoft.Extensions.Configuration;
-using Restful.Booker.Api.Tests.Data;
 
 namespace Restful.Booker.Api.Tests.Configuration;
 
@@ -16,7 +15,6 @@ public static class TestConfiguration
                 _configuration = new ConfigurationBuilder()
                     .SetBasePath(Directory.GetCurrentDirectory())
                     .AddJsonFile("config/appsettings.json", optional: false, reloadOnChange: true)
-                    //.AddJsonFile("test-data/test-data.json", optional: false, reloadOnChange: true)
                     .AddUserSecrets<ApiSettings>()
                     .AddEnvironmentVariables()
                     .Build();
@@ -32,10 +30,4 @@ public static class TestConfiguration
         return settings;
     }
 
-    public static TestData GetTestData()
-    {
-        var testData = new TestData();
-        Configuration.GetSection("TestData").Bind(testData);
-        return testData;
-    }
 }
