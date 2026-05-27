@@ -49,7 +49,7 @@ export default function (data) {
   });
 
   const createRes = http.post(`${BASE_URL}/booking`, createPayload, {
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
     tags: { endpoint: 'create_booking' },
   });
 
@@ -64,6 +64,7 @@ export default function (data) {
 
   if (bookingId) {
     const getRes = http.get(`${BASE_URL}/booking/${bookingId}`, {
+      headers: { Accept: 'application/json' },
       tags: { endpoint: 'get_booking_by_id' },
     });
 
@@ -86,6 +87,7 @@ export default function (data) {
     const putRes = http.put(`${BASE_URL}/booking/${bookingId}`, updatePayload, {
       headers: {
         'Content-Type': 'application/json',
+        Accept: 'application/json',
         Cookie: `token=${data.token}`,
       },
       tags: { endpoint: 'update_booking' },
