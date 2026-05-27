@@ -1,0 +1,52 @@
+name: Run Performance Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+  checks: write
+
+jobs:
+  performance-test:
+    name: Run k6 Performance Tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup k6
+      uses: grafana/setup-k6-action@v1
+
+    - name: Run ping performance tests
+      uses: grafana/run-k6-action@v1
+      env:
+        BASE_URL: ${{ secrets.BASE_URL }}
+        API_USERNAME: ${{ secrets.API_USERNAME }}
+        API_PASSWORD: ${{ secrets.API_PASSWORD }}
+      with:
+        path: ./Restful.Booker.Api.PerformanceTests/tests/ping-performance-tests.js
+
+    - name: Run auth performance tests
+      uses: grafana/run-k6-action@v1
+      env:
+        BASE_URL: ${{ secrets.BASE_URL }}
+        API_USERNAME: ${{ secrets.API_USERNAME }}
+        API_PASSWORD: ${{ secrets.API_PASSWORD }}
+      with:
+        path: ./Restful.Booker.Api.PerformanceTests/tests/auth-performance-tests.js
+
+    - name: Run booking performance tests
+      uses: grafana/run-k6-action@v1
+      env:
+        BASE_URL: ${{ secrets.BASE_URL }}
+        API_USERNAME: ${{ secrets.API_USERNAME }}
+        API_PASSWORD: ${{ secrets.API_PASSWORD }}
+      with:
+        path: ./Restful.Booker.Api.PerformanceTests/tests/booking-performance-tests.js

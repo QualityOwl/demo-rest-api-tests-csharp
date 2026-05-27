@@ -14,7 +14,7 @@ public static class TestConfiguration
             {
                 _configuration = new ConfigurationBuilder()
                     .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("config/appsettings.json", optional: false, reloadOnChange: true)
+                    .AddJsonFile("Config/appsettings.json", optional: false, reloadOnChange: true)
                     .AddUserSecrets<ApiSettings>()
                     .AddEnvironmentVariables()
                     .Build();

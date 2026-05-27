@@ -4,11 +4,11 @@ using System.Net;
 
 namespace Restful.Booker.Api.Tests;
 
-public class PingController_Tests : IClassFixture<TestFixture>
+public class PingController_FunctionalTests : IClassFixture<TestFixture>
 {
     private readonly TestFixture _fixture;
 
-    public PingController_Tests(TestFixture fixture)
+    public PingController_FunctionalTests(TestFixture fixture)
     {
         _fixture = fixture;
     }

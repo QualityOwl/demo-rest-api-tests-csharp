@@ -7,11 +7,11 @@ using System.Text;
 
 namespace Restful.Booker.Api.Tests;
 
-public class BookingController_Tests : IClassFixture<TestFixture>
+public class BookingController_FunctionalTests : IClassFixture<TestFixture>
 {
     private readonly TestFixture _fixture;
 
-    public BookingController_Tests(TestFixture fixture)
+    public BookingController_FunctionalTests(TestFixture fixture)
     {
         _fixture = fixture;
     }

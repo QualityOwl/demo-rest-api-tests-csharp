@@ -1,0 +1,12 @@
+{
+  "name": "restful-booker-api-performance-tests",
+  "version": "1.0.0",
+  "description": "K6 performance tests for the Restful Booker API",
+  "scripts": {
+    "test:ping": "k6 run tests/ping-performance-tests.js",
+    "test:auth": "k6 run tests/auth-performance-tests.js",
+    "test:booking": "k6 run tests/booking-performance-tests.js",
+    "test:smoke": "k6 run --vus 1 --iterations 1 tests/booking-performance-tests.js",
+    "test:all": "npm run test:ping && npm run test:auth && npm run test:booking"
+  }
+}

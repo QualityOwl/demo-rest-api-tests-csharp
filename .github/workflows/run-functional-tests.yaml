@@ -1,4 +1,4 @@
-name: Run API Tests
+name: Run Functional Tests
 
 on:
   push:
@@ -27,13 +27,13 @@ jobs:
         dotnet-version: '10.x'
 
     - name: Restore NuGet
-      run: dotnet restore Restful.Booker.Api/Restful.Booker.Api.slnx
+      run: dotnet restore Restful.Booker.Api.slnx
 
     - name: Build
-      run: dotnet build Restful.Booker.Api/Restful.Booker.Api.slnx --no-restore -p:WarningLevel=0
+      run: dotnet build Restful.Booker.Api.slnx --no-restore -p:WarningLevel=0
 
     - name: Run tests
-      run: dotnet test Restful.Booker.Api/Restful.Booker.Api.slnx --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" -p:WarningLevel=0
+      run: dotnet test Restful.Booker.Api.slnx --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx" -p:WarningLevel=0
       env:
         ApiSettings__Authentication__Username: ${{ secrets.AUTH_USERNAME }}
         ApiSettings__Authentication__Password: ${{ secrets.AUTH_PASSWORD }}
