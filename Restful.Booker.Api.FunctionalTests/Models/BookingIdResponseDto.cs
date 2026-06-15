@@ -1,9 +1,9 @@
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Restful.Booker.Api.Tests.Models;
 
 public class BookingIdResponseDto
 {
-    [JsonProperty("bookingid")]
+    [JsonPropertyName("bookingid")]
     public int BookingId { get; set; }
 }

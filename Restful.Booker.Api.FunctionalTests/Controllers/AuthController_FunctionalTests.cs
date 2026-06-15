@@ -1,5 +1,5 @@
 using FluentAssertions;
-using Newtonsoft.Json;
+using System.Text.Json;
 using Restful.Booker.Api.Tests.Fixtures;
 using Restful.Booker.Api.Tests.Models;
 using System.Text;
@@ -26,14 +26,14 @@ public class AuthController_FunctionalTests : IClassFixture<TestFixture>
         };
 
         var content = new StringContent(
-            JsonConvert.SerializeObject(authRequest),
+            JsonSerializer.Serialize(authRequest),
             Encoding.UTF8,
             "application/json");
 
         // Act
         var response = await _fixture.HttpClient.PostAsync("/auth", content);
         var responseBody = await response.Content.ReadAsStringAsync();
-        var authResponse = JsonConvert.DeserializeObject<AuthResponseDto>(responseBody);
+        var authResponse = JsonSerializer.Deserialize<AuthResponseDto>(responseBody);
 
         // Assert
         response.IsSuccessStatusCode.Should().BeTrue();
@@ -52,7 +52,7 @@ public class AuthController_FunctionalTests : IClassFixture<TestFixture>
         };
 
         var content = new StringContent(
-            JsonConvert.SerializeObject(authRequest),
+            JsonSerializer.Serialize(authRequest),
             Encoding.UTF8,
             "application/json");
 
