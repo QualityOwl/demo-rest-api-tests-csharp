@@ -22,6 +22,15 @@ Tests cover three areas of the Restful Booker API:
 
 API credentials are read from `Config/appsettings.json` and can be overridden with environment variables (used in CI).
 
+## Project structure
+
+| Folder | Purpose |
+|---|---|
+| `Controllers/` | Test classes organized by API controller (`Auth`, `Booking`, `Ping`) |
+| `Fixtures/` | `TestFixture` — sets up `HttpClient` and handles auth token caching |
+| `Models/` | DTOs for serializing request and response bodies |
+| `Config/` | `ApiSettings` and `TestConfiguration` — reads from `appsettings.json` or environment variables |
+
 ## Running the tests
 
 ```bash
