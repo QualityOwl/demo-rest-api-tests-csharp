@@ -1,24 +1,24 @@
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Restful.Booker.Api.Tests.Models;
 
 public class BookingDto
 {
-    [JsonProperty("firstname")]
+    [JsonPropertyName("firstname")]
     public string FirstName { get; set; } = string.Empty;
 
-    [JsonProperty("lastname")]
+    [JsonPropertyName("lastname")]
     public string LastName { get; set; } = string.Empty;
 
-    [JsonProperty("totalprice")]
+    [JsonPropertyName("totalprice")]
     public int TotalPrice { get; set; }
 
-    [JsonProperty("depositpaid")]
+    [JsonPropertyName("depositpaid")]
     public bool DepositPaid { get; set; }
 
-    [JsonProperty("bookingdates")]
+    [JsonPropertyName("bookingdates")]
     public BookingDatesDto BookingDates { get; set; } = new();
 
-    [JsonProperty("additionalneeds")]
+    [JsonPropertyName("additionalneeds")]
     public string? AdditionalNeeds { get; set; }
 }

@@ -1,5 +1,5 @@
 using FluentAssertions;
-using Newtonsoft.Json;
+using System.Text.Json;
 using Restful.Booker.Api.Tests.Fixtures;
 using Restful.Booker.Api.Tests.Models;
 using System.Net;
@@ -46,20 +46,20 @@ public class BookingController_FunctionalTests : IClassFixture<TestFixture>
         };
 
         var createContent = new StringContent(
-            JsonConvert.SerializeObject(booking),
+            JsonSerializer.Serialize(booking),
             Encoding.UTF8,
             "application/json");
 
         var createResponse = await _fixture.HttpClient.PostAsync("/booking", createContent);
         var createBody = await createResponse.Content.ReadAsStringAsync();
-        var created = JsonConvert.DeserializeObject<CreateBookingResponseDto>(createBody);
+        var created = JsonSerializer.Deserialize<CreateBookingResponseDto>(createBody);
 
         createResponse.StatusCode.Should().Be(HttpStatusCode.OK);
         created.Should().NotBeNull();
         // Act
         var response = await _fixture.HttpClient.GetAsync($"/booking/{created!.BookingId}");
         var responseBody = await response.Content.ReadAsStringAsync();
-        var retrievedBooking = JsonConvert.DeserializeObject<BookingDto>(responseBody);
+        var retrievedBooking = JsonSerializer.Deserialize<BookingDto>(responseBody);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -100,14 +100,14 @@ public class BookingController_FunctionalTests : IClassFixture<TestFixture>
         };
 
         var content = new StringContent(
-            JsonConvert.SerializeObject(booking),
+            JsonSerializer.Serialize(booking),
             Encoding.UTF8,
             "application/json");
 
         // Act
         var response = await _fixture.HttpClient.PostAsync("/booking", content);
         var responseBody = await response.Content.ReadAsStringAsync();
-        var createdBooking = JsonConvert.DeserializeObject<CreateBookingResponseDto>(responseBody);
+        var createdBooking = JsonSerializer.Deserialize<CreateBookingResponseDto>(responseBody);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -136,13 +136,13 @@ public class BookingController_FunctionalTests : IClassFixture<TestFixture>
         };
 
         var createContent = new StringContent(
-            JsonConvert.SerializeObject(originalBooking),
+            JsonSerializer.Serialize(originalBooking),
             Encoding.UTF8,
             "application/json");
 
         var createResponse = await _fixture.HttpClient.PostAsync("/booking", createContent);
         var createBody = await createResponse.Content.ReadAsStringAsync();
-        var created = JsonConvert.DeserializeObject<CreateBookingResponseDto>(createBody);
+        var created = JsonSerializer.Deserialize<CreateBookingResponseDto>(createBody);
 
         createResponse.StatusCode.Should().Be(HttpStatusCode.OK);
         created.Should().NotBeNull();
@@ -165,7 +165,7 @@ public class BookingController_FunctionalTests : IClassFixture<TestFixture>
         };
 
         var updateContent = new StringContent(
-            JsonConvert.SerializeObject(updatedBooking),
+            JsonSerializer.Serialize(updatedBooking),
             Encoding.UTF8,
             "application/json");
 
@@ -178,7 +178,7 @@ public class BookingController_FunctionalTests : IClassFixture<TestFixture>
         // Act
         var updateResponse = await _fixture.HttpClient.SendAsync(request);
         var updateBody = await updateResponse.Content.ReadAsStringAsync();
-        var result = JsonConvert.DeserializeObject<BookingDto>(updateBody);
+        var result = JsonSerializer.Deserialize<BookingDto>(updateBody);
 
         // Assert
         updateResponse.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -205,13 +205,13 @@ public class BookingController_FunctionalTests : IClassFixture<TestFixture>
         };
 
         var createContent = new StringContent(
-            JsonConvert.SerializeObject(booking),
+            JsonSerializer.Serialize(booking),
             Encoding.UTF8,
             "application/json");
 
         var createResponse = await _fixture.HttpClient.PostAsync("/booking", createContent);
         var createBody = await createResponse.Content.ReadAsStringAsync();
-        var created = JsonConvert.DeserializeObject<CreateBookingResponseDto>(createBody);
+        var created = JsonSerializer.Deserialize<CreateBookingResponseDto>(createBody);
 
         createResponse.StatusCode.Should().Be(HttpStatusCode.OK);
         created.Should().NotBeNull();
@@ -235,7 +235,7 @@ public class BookingController_FunctionalTests : IClassFixture<TestFixture>
         // Act
         var response = await _fixture.HttpClient.GetAsync("/booking");
         var responseBody = await response.Content.ReadAsStringAsync();
-        var bookingIds = JsonConvert.DeserializeObject<List<BookingIdResponseDto>>(responseBody);
+        var bookingIds = JsonSerializer.Deserialize<List<BookingIdResponseDto>>(responseBody);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -263,13 +263,13 @@ public class BookingController_FunctionalTests : IClassFixture<TestFixture>
         };
 
         var createContent = new StringContent(
-            JsonConvert.SerializeObject(booking),
+            JsonSerializer.Serialize(booking),
             Encoding.UTF8,
             "application/json");
 
         var createResponse = await _fixture.HttpClient.PostAsync("/booking", createContent);
         var createBody = await createResponse.Content.ReadAsStringAsync();
-        var created = JsonConvert.DeserializeObject<CreateBookingResponseDto>(createBody);
+        var created = JsonSerializer.Deserialize<CreateBookingResponseDto>(createBody);
 
         createResponse.StatusCode.Should().Be(HttpStatusCode.OK);
         created.Should().NotBeNull();
@@ -277,7 +277,7 @@ public class BookingController_FunctionalTests : IClassFixture<TestFixture>
         // Act
         var response = await _fixture.HttpClient.GetAsync($"/booking?firstname={uniqueFirstName}");
         var responseBody = await response.Content.ReadAsStringAsync();
-        var bookingIds = JsonConvert.DeserializeObject<List<BookingIdResponseDto>>(responseBody);
+        var bookingIds = JsonSerializer.Deserialize<List<BookingIdResponseDto>>(responseBody);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -304,13 +304,13 @@ public class BookingController_FunctionalTests : IClassFixture<TestFixture>
         };
 
         var createContent = new StringContent(
-            JsonConvert.SerializeObject(booking),
+            JsonSerializer.Serialize(booking),
             Encoding.UTF8,
             "application/json");
 
         var createResponse = await _fixture.HttpClient.PostAsync("/booking", createContent);
         var createBody = await createResponse.Content.ReadAsStringAsync();
-        var created = JsonConvert.DeserializeObject<CreateBookingResponseDto>(createBody);
+        var created = JsonSerializer.Deserialize<CreateBookingResponseDto>(createBody);
 
         createResponse.StatusCode.Should().Be(HttpStatusCode.OK);
         created.Should().NotBeNull();
@@ -318,7 +318,7 @@ public class BookingController_FunctionalTests : IClassFixture<TestFixture>
         // Act
         var response = await _fixture.HttpClient.GetAsync($"/booking?lastname={uniqueLastName}");
         var responseBody = await response.Content.ReadAsStringAsync();
-        var bookingIds = JsonConvert.DeserializeObject<List<BookingIdResponseDto>>(responseBody);
+        var bookingIds = JsonSerializer.Deserialize<List<BookingIdResponseDto>>(responseBody);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -345,13 +345,13 @@ public class BookingController_FunctionalTests : IClassFixture<TestFixture>
         };
 
         var createContent = new StringContent(
-            JsonConvert.SerializeObject(booking),
+            JsonSerializer.Serialize(booking),
             Encoding.UTF8,
             "application/json");
 
         var createResponse = await _fixture.HttpClient.PostAsync("/booking", createContent);
         var createBody = await createResponse.Content.ReadAsStringAsync();
-        var created = JsonConvert.DeserializeObject<CreateBookingResponseDto>(createBody);
+        var created = JsonSerializer.Deserialize<CreateBookingResponseDto>(createBody);
 
         createResponse.StatusCode.Should().Be(HttpStatusCode.OK);
         created.Should().NotBeNull();
@@ -359,7 +359,7 @@ public class BookingController_FunctionalTests : IClassFixture<TestFixture>
         // Act - filter by checkout date (returns bookings with checkout >= date)
         var response = await _fixture.HttpClient.GetAsync($"/booking?checkout={uniqueCheckout}");
         var responseBody = await response.Content.ReadAsStringAsync();
-        var bookingIds = JsonConvert.DeserializeObject<List<BookingIdResponseDto>>(responseBody);
+        var bookingIds = JsonSerializer.Deserialize<List<BookingIdResponseDto>>(responseBody);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -386,13 +386,13 @@ public class BookingController_FunctionalTests : IClassFixture<TestFixture>
         };
 
         var createContent = new StringContent(
-            JsonConvert.SerializeObject(booking),
+            JsonSerializer.Serialize(booking),
             Encoding.UTF8,
             "application/json");
 
         var createResponse = await _fixture.HttpClient.PostAsync("/booking", createContent);
         var createBody = await createResponse.Content.ReadAsStringAsync();
-        var created = JsonConvert.DeserializeObject<CreateBookingResponseDto>(createBody);
+        var created = JsonSerializer.Deserialize<CreateBookingResponseDto>(createBody);
 
         createResponse.StatusCode.Should().Be(HttpStatusCode.OK);
         created.Should().NotBeNull();
@@ -400,7 +400,7 @@ public class BookingController_FunctionalTests : IClassFixture<TestFixture>
         // Act
         var response = await _fixture.HttpClient.GetAsync($"/booking/{created!.BookingId}");
         var responseBody = await response.Content.ReadAsStringAsync();
-        var retrievedBooking = JsonConvert.DeserializeObject<BookingDto>(responseBody);
+        var retrievedBooking = JsonSerializer.Deserialize<BookingDto>(responseBody);
 
         // Assert - verify all fields are present and correct
         response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -434,14 +434,14 @@ public class BookingController_FunctionalTests : IClassFixture<TestFixture>
         };
 
         var content = new StringContent(
-            JsonConvert.SerializeObject(booking),
+            JsonSerializer.Serialize(booking),
             Encoding.UTF8,
             "application/json");
 
         // Act
         var response = await _fixture.HttpClient.PostAsync("/booking", content);
         var responseBody = await response.Content.ReadAsStringAsync();
-        var createdBooking = JsonConvert.DeserializeObject<CreateBookingResponseDto>(responseBody);
+        var createdBooking = JsonSerializer.Deserialize<CreateBookingResponseDto>(responseBody);
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -469,13 +469,13 @@ public class BookingController_FunctionalTests : IClassFixture<TestFixture>
         };
 
         var createContent = new StringContent(
-            JsonConvert.SerializeObject(originalBooking),
+            JsonSerializer.Serialize(originalBooking),
             Encoding.UTF8,
             "application/json");
 
         var createResponse = await _fixture.HttpClient.PostAsync("/booking", createContent);
         var createBody = await createResponse.Content.ReadAsStringAsync();
-        var created = JsonConvert.DeserializeObject<CreateBookingResponseDto>(createBody);
+        var created = JsonSerializer.Deserialize<CreateBookingResponseDto>(createBody);
 
         createResponse.StatusCode.Should().Be(HttpStatusCode.OK);
         created.Should().NotBeNull();
@@ -494,7 +494,7 @@ public class BookingController_FunctionalTests : IClassFixture<TestFixture>
         };
 
         var updateContent = new StringContent(
-            JsonConvert.SerializeObject(updatedBooking),
+            JsonSerializer.Serialize(updatedBooking),
             Encoding.UTF8,
             "application/json");
 
@@ -529,13 +529,13 @@ public class BookingController_FunctionalTests : IClassFixture<TestFixture>
         };
 
         var createContent = new StringContent(
-            JsonConvert.SerializeObject(originalBooking),
+            JsonSerializer.Serialize(originalBooking),
             Encoding.UTF8,
             "application/json");
 
         var createResponse = await _fixture.HttpClient.PostAsync("/booking", createContent);
         var createBody = await createResponse.Content.ReadAsStringAsync();
-        var created = JsonConvert.DeserializeObject<CreateBookingResponseDto>(createBody);
+        var created = JsonSerializer.Deserialize<CreateBookingResponseDto>(createBody);
 
         createResponse.StatusCode.Should().Be(HttpStatusCode.OK);
         created.Should().NotBeNull();
@@ -546,7 +546,7 @@ public class BookingController_FunctionalTests : IClassFixture<TestFixture>
         // Partial payload - only updating firstname and lastname
         var partialUpdate = new { firstname = "PatchedFirst", lastname = "PatchedLast" };
         var patchContent = new StringContent(
-            JsonConvert.SerializeObject(partialUpdate),
+            JsonSerializer.Serialize(partialUpdate),
             Encoding.UTF8,
             "application/json");
 
@@ -559,7 +559,7 @@ public class BookingController_FunctionalTests : IClassFixture<TestFixture>
         // Act
         var patchResponse = await _fixture.HttpClient.SendAsync(request);
         var patchBody = await patchResponse.Content.ReadAsStringAsync();
-        var result = JsonConvert.DeserializeObject<BookingDto>(patchBody);
+        var result = JsonSerializer.Deserialize<BookingDto>(patchBody);
 
         // Assert - patched fields changed, unpatched fields retained
         patchResponse.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -588,20 +588,20 @@ public class BookingController_FunctionalTests : IClassFixture<TestFixture>
         };
 
         var createContent = new StringContent(
-            JsonConvert.SerializeObject(booking),
+            JsonSerializer.Serialize(booking),
             Encoding.UTF8,
             "application/json");
 
         var createResponse = await _fixture.HttpClient.PostAsync("/booking", createContent);
         var createBody = await createResponse.Content.ReadAsStringAsync();
-        var created = JsonConvert.DeserializeObject<CreateBookingResponseDto>(createBody);
+        var created = JsonSerializer.Deserialize<CreateBookingResponseDto>(createBody);
 
         createResponse.StatusCode.Should().Be(HttpStatusCode.OK);
         created.Should().NotBeNull();
 
         var partialUpdate = new { firstname = "ShouldFail" };
         var patchContent = new StringContent(
-            JsonConvert.SerializeObject(partialUpdate),
+            JsonSerializer.Serialize(partialUpdate),
             Encoding.UTF8,
             "application/json");
 
@@ -636,13 +636,13 @@ public class BookingController_FunctionalTests : IClassFixture<TestFixture>
         };
 
         var createContent = new StringContent(
-            JsonConvert.SerializeObject(booking),
+            JsonSerializer.Serialize(booking),
             Encoding.UTF8,
             "application/json");
 
         var createResponse = await _fixture.HttpClient.PostAsync("/booking", createContent);
         var createBody = await createResponse.Content.ReadAsStringAsync();
-        var created = JsonConvert.DeserializeObject<CreateBookingResponseDto>(createBody);
+        var created = JsonSerializer.Deserialize<CreateBookingResponseDto>(createBody);
 
         createResponse.StatusCode.Should().Be(HttpStatusCode.OK);
         created.Should().NotBeNull();
@@ -672,13 +672,13 @@ public class BookingController_FunctionalTests : IClassFixture<TestFixture>
         };
 
         var createContent = new StringContent(
-            JsonConvert.SerializeObject(booking),
+            JsonSerializer.Serialize(booking),
             Encoding.UTF8,
             "application/json");
 
         var createResponse = await _fixture.HttpClient.PostAsync("/booking", createContent);
         var createBody = await createResponse.Content.ReadAsStringAsync();
-        var created = JsonConvert.DeserializeObject<CreateBookingResponseDto>(createBody);
+        var created = JsonSerializer.Deserialize<CreateBookingResponseDto>(createBody);
 
         createResponse.StatusCode.Should().Be(HttpStatusCode.OK);
         created.Should().NotBeNull();

@@ -1,9 +1,9 @@
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Restful.Booker.Api.Tests.Models;
 
 public class AuthResponseDto
 {
-    [JsonProperty("token")]
+    [JsonPropertyName("token")]
     public string Token { get; set; } = string.Empty;
 }

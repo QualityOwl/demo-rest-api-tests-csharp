@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using System.Text.Json;
 using Restful.Booker.Api.Tests.Configuration;
 using Restful.Booker.Api.Tests.Models;
 using System.Net.Http.Headers;
@@ -38,7 +38,7 @@ public class TestFixture : IDisposable
         };
 
         var content = new StringContent(
-            JsonConvert.SerializeObject(authRequest),
+            JsonSerializer.Serialize(authRequest),
             Encoding.UTF8,
             "application/json");
 
@@ -46,7 +46,7 @@ public class TestFixture : IDisposable
         response.EnsureSuccessStatusCode();
 
         var responseBody = await response.Content.ReadAsStringAsync();
-        var authResponse = JsonConvert.DeserializeObject<AuthResponseDto>(responseBody);
+        var authResponse = JsonSerializer.Deserialize<AuthResponseDto>(responseBody);
 
         _authToken = authResponse?.Token ?? throw new InvalidOperationException("Failed to obtain auth token");
         return _authToken;
